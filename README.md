@@ -7,7 +7,7 @@
 [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
 
 > **Vibe2Ship Hackathon Submission**
-> **Problem Statement 2:** Community Hero — Hyperlocal Problem Solver
+> **Problem Statement 2:** Community Hero — Hyperlocal Problem Solver  
 > **Live Demo:** [civicpulse-93910.web.app](https://civicpulse-93910.web.app)
 
 ---
