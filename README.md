@@ -13,89 +13,213 @@
 
 ---
 
-## 📌 Project Overview
-**CivicPulse** is a real-time civic issue reporting and AI-driven accountability platform for Chennai, India. It empowers citizens to identify, report, and track hyperlocal infrastructure issues (such as potholes, waterlogging, damaged streetlights, and garbage dumping) while using autonomous AI agents to ensure transparency, monitor Service Level Agreements (SLAs), generate formal RTI escalations, and verify resolutions.
+A lightweight civic intelligence dashboard, reporting engine, and autonomous accountability platform for municipal issues in Chennai. Report issues with a photo, let an autonomous Gemini AI agent analyze, categorize, track SLA status, and write formal RTI complaint letters, and monitor zone/ward performance in real-time.
 
----
+Think of it as a modernized, AI-augmented municipal grievance system — built to demonstrate end-to-end civic accountability and automated verification instead of manual triage and static reports.
 
-## ✨ Key Features
+## Features
 
-### 📸 Smart Issue Reporting (Powered by Gemini Vision)
-*   **Zero-Form Overhead**: Citizens upload a photo of the issue.
-*   **AI Auto-Categorization**: Gemini Vision parses the image to determine the category, severity (1–10 scale), and a precise structural description.
-*   **Geospatial Tracking**: Captures live coordinate data to pin issues precisely.
+- **Gemini Vision Triage** — Upload a photo of any civic issue (e.g. pothole, broken light) and the AI automatically determines the category, details, severity (1–10), and priority.
+- **Geospatial Mapping** — Real-time interactive Google Map displaying color-coded issues with filters for Chennai's 15 administrative zones and 200 wards.
+- **Autonomous AI Agent** — Monitors SLAs (flags breaches after 72 hrs), auto-escalates community swarms (3+ upvotes), drafts legally formatted Right to Information (RTI) complaint letters, and verifies resolution photos before closing issues.
+- **Dynamic Performance Dashboard** — Computes dynamic accountability letter grades (A–F) for each zone/ward based on open issues, breaches, and resolution times.
+- **Shame Wall** — Highlights chronic, unaddressed SLA breaches to drive administrative accountability.
+- **Community Gamification** — Encourages civic participation through upvotes, comments, karma points, and a community hero leaderboard.
 
-### 🗺️ Live Geospatial Map
-*   **Interactive Visualization**: A dark-mode Google Maps view plotting active issues.
-*   **Zone & Ward Filtering**: Drill down through Chennai's 15 administrative zones and 200 wards.
-*   **Status Color Coding**: Visual markers showing issue lifecycle stages (Open, In Progress, Resolved, Critical, SLA Breached).
+## Tech Stack
 
-### 🤖 Autonomous AI Agent (Swarm & Accountability Layer)
-*   **SLA Monitor**: Automatically flags issues that exceed the 72-hour resolution SLA threshold as "Breached".
-*   **Swarm Escalation**: Upvoting triggers community escalation. If an issue gets 3+ upvotes, the AI automatically raises its severity to `CRITICAL`.
-*   **RTI Generator**: Automatically drafts a formal, legally structured Right to Information (RTI) complaint letter addressed to the Zonal Officer of the Greater Chennai Corporation (GCC).
-*   **Resolution Verifier**: When a worker uploads a resolution photo, Gemini compares it against the original report photo to verify if the issue has actually been fixed before resolving it.
+| Layer | Technology |
+|---|---|
+| Frontend | React 19, Vanilla CSS, Vite 8, Lucide React Icons |
+| Database | Firebase Firestore (Real-time synchronization) |
+| Authentication | Firebase Auth (Google OAuth) |
+| AI Services | Google Gemini 2.0 Flash API (Vision & Text generation) |
+| Maps & Geo | Google Maps JavaScript API |
+| Hosting | Firebase Hosting (Google Cloud infrastructure) |
 
-### 📊 GCC Performance Dashboard
-*   **Accountability Scoring**: Automatically computes a dynamic letter grade (A–F) for Chennai's zones and wards using a mathematical formula:
-    $$\text{Score} = 100 - (\text{Open} \times 2) - (\text{Breaches} \times 5) - (\text{Avg Resolution Days} \times 3)$$
-*   **Shame Wall**: Highlights chronic, unaddressed SLA breaches to drive administrative accountability.
-*   **AI Predictive Insights**: Real-time warnings (e.g. vector risk indicators for open garbage dumping, drainage overload patterns).
-*   **Quick Metrics**: Key KPIs showing average severity, resolution rate, and community engagement.
+## Project Structure
 
----
-
-## 🛠️ Google Technologies Utilized
-
-1.  **Google Gemini 2.0 Flash**: Powers image classification, severity assessment, RTI drafting, and automated resolution verification.
-2.  **Google Maps JavaScript API**: Renders the live interactive mapping interface with custom styles and geolocating.
-3.  **Firebase Firestore**: Real-time database synchronizing issues, agent logs, and leaderboards across all users instantly.
-4.  **Firebase Authentication**: Secure user sign-in via Google OAuth.
-5.  **Firebase Hosting**: Scalable production deployment on Google Cloud infrastructure.
-
----
-
-## 💻 Tech Stack
-*   **Frontend**: React 19, React Router, Vite 8, Lucide React Icons
-*   **Backend & DB**: Firebase (Auth, Firestore, Storage)
-*   **AI Service**: Gemini API (`@google/generative-ai`)
-*   **Styling**: Vanilla CSS (Custom Design System with dark mode glassmorphism)
-
----
-
-## 🚀 Local Setup & Installation
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/M-Nikhita/CivilPulse.git
-cd CivilPulse
+```
+.
+├── firebase.json                   # Firebase deployment configuration
+├── .firebaserc                     # Firebase project mapping
+├── civicpulse/
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── .env.example                # Sample environment variables config
+│   ├── public/
+│   │   ├── favicon.svg
+│   │   └── icons.svg
+│   └── src/
+│       ├── main.jsx                # Entry point
+│       ├── App.jsx                 # Routing and shell configuration
+│       ├── App.css
+│       ├── index.css               # Global styles & design system tokens
+│       ├── components/
+│       │   ├── Agent/              # AI Agent console & monitoring panel
+│       │   ├── Auth/               # Google login page
+│       │   ├── Dashboard/          # Ward ratings, Shame Wall, and charts
+│       │   ├── Feed/               # Live issue feed and detail modal
+│       │   ├── Layout/             # App shell navigation
+│       │   ├── Map/                # Google Maps view
+│       │   └── Report/             # Photo-based report wizard
+│       ├── context/
+│       │   └── AuthContext.jsx     # Firebase Auth context with Popups
+│       ├── firebase/
+│       │   ├── config.js           # Firebase app initialization
+│       │   └── firestore.js        # Firestore CRUD queries and listeners
+│       ├── services/
+│       │   └── gemini.js           # Gemini API wrappers (Vision & Text prompts)
+│       └── utils/
+│           └── chennaiData.js      # Chennai structural zones and wards database
 ```
 
-### 2. Install Dependencies
+## Architecture
+
+```
+LoginPage (Google Auth) → AppShell (Navigation)
+                             │
+       ┌─────────────────────┼─────────────────────┐
+       ▼                     ▼                     ▼
+  MapView.jsx            IssueFeed.jsx       Dashboard.jsx
+(Google Maps API)       (Upvotes/Comments)  (Grades & Shame Wall)
+       │                     │                     │
+       └──────────┬──────────┴─────────────────────┘
+                  ▼
+         Firebase Firestore (Real-time Sync)
+                  ▲
+                  │  (Image Analysis / RTI Generation)
+         Google Gemini 2.0 API
+```
+
+The React frontend establishes a real-time connection to Firebase Firestore. When a citizen submits an issue with an image, the client prompts Google Gemini 2.0 Flash to extract structural features, classify the category, and assign a severity score. An background polling loop (or client-side simulation) runs the autonomous agent logic: tracking SLAs, flagging breaches, drafting RTI letters for breached reports, and writing actions back to the Firestore database which instantly syncs to all active dashboard views.
+
+## Prerequisites
+
+- **Node.js** (v18.x or higher)
+- **npm** (v9.x or higher)
+- **Google Cloud Platform Project** with:
+  - Google Maps JavaScript API enabled
+  - Google Gemini API Key (Google AI Studio)
+- **Firebase Project** with:
+  - Firestore Database enabled
+  - Google Provider enabled in Firebase Auth
+
+## Setup & Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/M-Nikhita/CivilPulse.git
+cd CivilPulse/civicpulse
+```
+
+### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
-### 3. Setup Environment Variables
-Create a `.env` file in the root directory:
-```env
-VITE_GEMINI_API_KEY=your_gemini_api_key
-VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+### 3. Configure environment variables
 
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_firebase_app_id
+Create a `.env` file in the `civicpulse/` directory:
+
+```env
+# Gemini API Key -> https://aistudio.google.com/app/apikey
+VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+
+# Google Maps API Key -> https://console.cloud.google.com/apis/credentials
+VITE_GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+VITE_FIREBASE_STORAGE_BUCKET=YOUR_FIREBASE_STORAGE_BUCKET
+VITE_FIREBASE_MESSAGING_SENDER_ID=YOUR_FIREBASE_MESSAGING_SENDER_ID
+VITE_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
 ```
 
-### 4. Run Development Server
+### 4. Run the development server
+
 ```bash
 npm run dev
 ```
 
-### 5. Build for Production
+The application will start locally on **`http://localhost:5173`**.
+
+### 5. Build and Deploy (Firebase Hosting)
+
+Deploy the build directly to Google Cloud's Firebase Hosting CDN:
+
 ```bash
+# Build production assets
 npm run build
+
+# Deploy to Hosting (run from the repository root containing firebase.json)
+cd ..
+firebase deploy --only hosting
 ```
+
+## Using the Application
+
+1. Open the live site (or `http://localhost:5173`) and sign in using your Google Account.
+2. Visit the **Live Map** to explore existing pins or filter by Chennai Zone/Ward.
+3. Click **Report Issue**, upload an image (e.g. damaged street road or water logging), and watch the Gemini AI instantly classify it and fill in the details.
+4. Go to **Issue Feed** to view active complaints, upvote important ones to trigger AI agent priority escalation, or write comments.
+5. Open the **Performance Dashboard** to monitor GCC performance grades, SLA breach statistics on the Shame Wall, and real-time AI safety suggestions.
+6. Open the **AI Agent Log** to inspect autonomous agent actions like RTI letters drafted, SLA breaches caught, and swarms managed.
+
+## Firestore Schema Reference
+
+### `reports` Collection
+Stores reported community issues:
+```typescript
+interface Report {
+  id?: string;
+  title: string;
+  description: string;
+  category: "Waterlogging" | "Open Drain / Sewer" | "Broken Streetlight" | "Garbage Dumping" | "Road / Pothole" | "Other";
+  severity: number;              // 1 to 10 scale
+  status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CRITICAL";
+  latitude: number;
+  longitude: number;
+  imageUrl: string;
+  upvotes: number;
+  upvotedBy: string[];           // User IDs list
+  comments: Comment[];
+  createdAt: Timestamp;
+  resolvedAt?: Timestamp;
+  zone: string;                  // Chennai Zone Name (e.g. Zone 13 - Adyar)
+  ward: string;                  // Chennai Ward Name (e.g. Ward 172)
+  reporterName: string;
+  reporterId: string;
+  slaDeadline: Timestamp;        // createdAt + 72 hours
+  slaStatus: "OK" | "BREACHED";
+  rtiLetter?: string;            // Auto-drafted RTI letter on breach
+}
+```
+
+### `agent_logs` Collection
+Tracks autonomous agent actions:
+```typescript
+interface AgentLog {
+  id?: string;
+  timestamp: Timestamp;
+  actionType: "SLA_MONITOR" | "SWARM_ESCALATION" | "RTI_GENERATOR" | "RESOLUTION_VERIFICATION";
+  reportId: string;
+  message: string;
+  details?: string;
+}
+```
+
+## Roadmap
+
+- **Automatic Official Delivery** — Send auto-generated RTI and complaint emails directly to public grievance portals via official API endpoints.
+- **Worker App Companion** — Separate dashboard for GCC field engineers to mark issues "In Progress", upload resolution photos, and receive directions.
+- **SLA Penalty Automation** — Link smart contracts or micro-incentives to refund reporting users or penalize slow resolution times.
+- **Predictive Infrastructure Budgets** — AI budget projection based on ward issue frequency, severity, and historic fix costs.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
