@@ -70,11 +70,6 @@ export default function AppShell({ children }) {
               id={item.id}
               className={`nav-item${location.pathname === item.path ? ' active' : ''}`}
               onClick={() => navigate(item.path)}
-              style={item.highlight && location.pathname !== item.path ? {
-                background: 'rgba(59,130,246,0.08)',
-                borderColor: 'rgba(59,130,246,0.2)',
-                color: 'var(--brand)',
-              } : {}}
             >
               <span className="nav-icon">{item.icon}</span>
               {item.label}
