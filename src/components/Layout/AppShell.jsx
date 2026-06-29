@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 const NAV_ITEMS = [
   { path: '/',          icon: '🗺️', label: 'Live Map',        id: 'nav-map' },
   { path: '/feed',      icon: '📋', label: 'Issue Feed',       id: 'nav-feed' },
-  { path: '/report',    icon: '📸', label: 'Report Issue',     id: 'nav-report', highlight: true },
+  { path: '/report',    icon: '📸', label: 'Report Issue',     id: 'nav-report' },
   { path: '/dashboard', icon: '📊', label: 'Performance Dashboard', id: 'nav-dashboard' },
   { path: '/agent',     icon: '🤖', label: 'AI Agent Log',     id: 'nav-agent' },
 ];
