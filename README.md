@@ -21,6 +21,7 @@ Think of it as a modernized, AI-augmented municipal grievance system — built t
 
 - **Gemini Vision Triage** — Upload a photo of any civic issue (e.g. pothole, broken light) and the AI automatically determines the category, details, severity (1–10), and priority.
 - **Geospatial Mapping** — Real-time interactive Google Map displaying color-coded issues with filters for Chennai's 15 administrative zones and 200 wards.
+- **🛠️ Admin Control Panel** — Appending `?admin=true` to the Agent Log URL (i.e. `/agent?admin=true`) unlocks active admin commands: seeding mock reports (50–500 issues), running agent sweeps on-demand, resetting/wiping the Firestore database, and exiting back to the citizen view via the "Exit Admin" button.
 - **Autonomous AI Agent** — Monitors SLAs (flags breaches after 72 hrs), auto-escalates community swarms (3+ upvotes), drafts legally formatted Right to Information (RTI) complaint letters, and verifies resolution photos before closing issues.
 - **Dynamic Performance Dashboard** — Computes dynamic accountability letter grades (A–F) for each zone/ward based on open issues, breaches, and resolution times.
 - **Shame Wall** — Highlights chronic, unaddressed SLA breaches to drive administrative accountability.
