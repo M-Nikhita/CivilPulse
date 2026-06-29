@@ -268,6 +268,17 @@ export default function AgentPanel() {
             >
               🗑️ Clear Logs
             </button>
+            <button 
+              className="btn btn-ghost btn-sm" 
+              style={{ height: '38px', color: 'var(--text-muted)' }} 
+              onClick={() => {
+                sessionStorage.removeItem('civicpulse_is_admin');
+                window.location.href = '/agent';
+              }}
+              id="exit-admin-btn"
+            >
+              🚪 Exit Admin
+            </button>
           </div>
         )}
       </div>
