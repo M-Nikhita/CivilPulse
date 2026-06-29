@@ -301,7 +301,7 @@ export default function Dashboard() {
         </div>
 
         {/* Main Dashboard Workspace Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: 20, padding: '0 24px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: 20, padding: '0 24px 24px', alignItems: 'start' }}>
           
           {/* Left Column: Administrative Ratings & Leaderboards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -427,7 +427,7 @@ export default function Dashboard() {
               const resRate = Math.round((reports.filter(r => r.status === 'RESOLVED').length / total) * 100);
               const avgUp  = (reports.reduce((s, r) => s + (r.upvotes || 0), 0) / total).toFixed(1);
               return (
-                <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="card">
                   <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10 }}>Quick Metrics</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     {[
@@ -541,12 +541,12 @@ export default function Dashboard() {
             </div>
 
             {/* Score formula */}
-            <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 14 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)' }}>Accountability Rating Formula</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 15, fontWeight: 700, wordBreak: 'break-all', lineHeight: 1.8, color: 'var(--text-primary)' }}>
+            <div className="card">
+              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Accountability Rating Formula</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, wordBreak: 'break-all', color: 'var(--text-primary)' }}>
                 Score = 100 − (open × 2) − (breaches × 5) − (avgResolutionDays × 3)
               </div>
-              <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 8 }}>
                 Higher scores denote highly responsive municipal action.
               </div>
             </div>

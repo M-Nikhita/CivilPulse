@@ -1,6 +1,6 @@
 // Auth context — wraps the whole app
 import { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithRedirect, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/config';
 
 const AuthContext = createContext(null);
@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     return unsub;
   }, []);
 
-  const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
+  const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
   const logout = () => signOut(auth);
 
   return (
